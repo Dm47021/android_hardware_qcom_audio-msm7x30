@@ -1,5 +1,4 @@
 ifneq ($(BUILD_TINY_ANDROID),true)
-ifeq ($(strip $(TARGET_USES_QCOM_MM_AUDIO)),true)
 
 #AUDIO_POLICY_TEST := true
 #ENABLE_AUDIO_DUMP := true
@@ -33,6 +32,12 @@ endif
 LOCAL_STATIC_LIBRARIES := \
     libmedia_helper \
     libaudiohw_legacy
+
+# Proprietary libraries we don't have access to.
+$(shell mkdir -p $(OUT)/obj/SHARED_LIBRARIES/libaudioalsa_intermediates/)
+$(shell touch $(OUT)/obj/SHARED_LIBRARIES/libaudioalsa_intermediates/export_includes)
+$(shell mkdir -p $(OUT)/obj/SHARED_LIBRARIES/libaudcal_intermediates/)
+$(shell touch $(OUT)/obj/SHARED_LIBRARIES/libaudcal_intermediates/export_includes)
 
 LOCAL_MODULE := audio.primary.$(TARGET_BOARD_PLATFORM)
 
@@ -88,5 +93,4 @@ LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 include $(BUILD_SHARED_LIBRARY)
 
 
-endif # TARGET_USES_QCOM_MM_AUDIO
 endif # not BUILD_TINY_ANDROID
