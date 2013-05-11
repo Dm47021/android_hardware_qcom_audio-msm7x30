@@ -1,3 +1,5 @@
+ifeq ($(TARGET_QCOM_AUDIO_VARIANT),msm7x30)
+
 AUDIO_HW_ROOT := $(call my-dir)
 
 ifeq ($(strip $(BOARD_USES_ALSA_AUDIO)),true)
@@ -9,4 +11,6 @@ ifeq ($(strip $(BOARD_USES_ALSA_AUDIO)),true)
 endif
 ifeq ($(call is-board-platform,msm7x30),true)
     include $(AUDIO_HW_ROOT)/msm7x30/Android.mk
+endif
+
 endif
