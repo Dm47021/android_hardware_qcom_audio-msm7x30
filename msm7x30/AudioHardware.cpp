@@ -31,6 +31,7 @@
 #include <dlfcn.h>
 #include <fcntl.h>
 #include <media/AudioSystem.h>
+#include <cutils/properties.h>
 
 // ToDo: Remove this definition
 #define QC_PROP
@@ -1119,7 +1120,13 @@ static status_t do_route_audio_rpc(uint32_t device,
     }
     else if(device == SND_DEVICE_HEADSET) {
         new_rx_device = DEVICE_HEADSET_RX;
-        new_tx_device = DEVICE_HEADSET_TX;
+
+        char value[PROPERTY_VALUE_MAX];
+        property_get("service.audio.hs_intmic", value, "0");
+        if (!strcmp(value, "1"))
+            new_tx_device = DEVICE_SPEAKER_TX;
+        else
+            new_tx_device = DEVICE_HEADSET_TX;
         ALOGV("In HEADSET");
     }
     else if(device == SND_DEVICE_NO_MIC_HEADSET) {
