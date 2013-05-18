@@ -1122,7 +1122,7 @@ static status_t do_route_audio_rpc(uint32_t device,
         new_rx_device = DEVICE_HEADSET_RX;
 
         char value[PROPERTY_VALUE_MAX];
-        property_get("service.audio.hs_intmic", value, "0");
+        property_get("persist.service.audio.hs_intmic", value, "0");
         if (!strcmp(value, "1"))
             new_tx_device = DEVICE_SPEAKER_TX;
         else
